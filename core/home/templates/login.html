@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Gateway Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home/loginstyles.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="branding">
+            <a href="https://imgbb.com/"><img src="{% static 'home/images/api_logo-removebg-preview.png' %}" alt="API Logo" class="logo"></a>
+            <h1>Secure API Gateway</h1>
+            <p class="tagline">Fast. Secure. Reliable.</p>
+            <p class="description">Manage your APIs with enterprise-grade security and seamless access.</p>
+        </div>
+        
+        <form class="login-form" >
+            
+            <input type="username" placeholder="Username" required disabled>
+            <input type="password" placeholder="Password" required disabled>
+            <a href="dashboard" class="button">Sign In</a>          
+            <div class="links">
+                <a href="#">Forgot Password?</a>
+                <a href="#">Create an Account</a>
+            </div>
+        </form>
+
+        <!-- Google Login Button -->
+        <div class="google-login">
+            <button id="google-signin">
+                <img src="google-icon.png" alt="Google Logo" class="google-icon"> 
+                Login with Google
+            </button>
+        </div>
+
+        <div class="support-links">
+            <a href="#">Help Center</a>
+            <a href="#">API Docs</a>
+            <a href="#">Security Policy</a>
+        </div>
+        <div>
+            <p class="security-note">🔒 Secured with OAuth 2.0 & JWT</p>
+        </div>
+    </div>
+    <script src="{% static 'home/loginscript.js' %}"></script>
+</body>
+</html>
