@@ -1,0 +1,482 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+a{
+    text-decoration: none;
+    color: #f1f3f2;
+    font-size: 14px;
+}
+
+canvas{
+    width: 100% !important;
+}
+
+img{
+    object-fit: cover;
+}
+
+body{
+    background: #f1f3f2;
+}
+
+.top-container{
+    background: #031224;
+    border-radius: 0 0 30px 30px;
+    padding-bottom: 10px;
+}
+
+.top-container .nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px 14px;
+    border-bottom: 2px solid #1e293b;
+}
+
+.top-container .nav .logo{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.top-container .nav .logo i{
+    color: #f1f3f2;
+    font-size: 24px;
+}
+
+.top-container .nav .logo a{
+    font-size: 16px;
+}
+
+.top-container .nav .nav-links{
+    display: flex;
+    gap: 20px;
+}
+
+.top-container .nav .nav-links a{
+    color: #ccc;
+    transition: all 0.3s ease;
+}
+
+.top-container .nav .nav-links a:hover{
+    color: #fff;
+}
+
+.top-container .nav .right-section{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.top-container .nav .right-section > i{
+    color: #f1f3f2;
+    background: #1e293b;
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.top-container .nav .right-section .profile{
+    display: flex;
+    align-items: center;
+    background: #1e293b;
+    padding: 0 10px;
+    border-radius: 50px;
+    gap: 10px;
+}
+
+.top-container .nav .right-section .profile .info{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.top-container .nav .right-section .profile .info img{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #f1f3f2;
+}
+
+.top-container .nav .right-section .profile .info a{
+    font-size: 13px;
+}
+
+.top-container .nav .right-section .profile .info p{
+    font-size: 13px;
+    color: #ccc;
+}
+
+.top-container .nav .right-section .profile > i{
+    color: #f1f3f2;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.top-container .status{
+    padding: 20px 20px 10px;
+}
+
+/* Logs & Monitoring Page */
+.top-container .status {
+    background: #10151c;
+    padding: 20px;
+    border-radius: 18px;
+    color: #ffffff;
+}
+
+/* Header */
+.top-container .status .header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.top-container .status .header h4 {
+    color: #f1f3f2;
+    font-weight: 500;
+}
+
+.top-container .status .header h4#big {
+    flex: 3;
+}
+
+.top-container .status .header h4#small {
+    flex: 1;
+    padding-left: 90px;
+}
+
+/* Filters Section */
+.top-container .status .filters {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.top-container .status .filters label {
+    font-size: 14px;
+    color: #cccccc;
+}
+
+.top-container .status .filters input, 
+.top-container .status .filters select {
+    background: #1a1f27;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    color: white;
+}
+
+/* Logs Table */
+.top-container .status .logs-container {
+    background: #1a1f27;
+    padding: 15px;
+    border-radius: 18px;
+    overflow-x: auto;
+}
+
+.top-container .status .logs-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+}
+
+.top-container .status .logs-table th, 
+.top-container .status .logs-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+.top-container .status .logs-table th {
+    background: #2a2f38;
+}
+
+.top-container .status .logs-table tbody tr:hover {
+    background: #242a33;
+}
+
+/* Status Code Colors */
+.status-200 {
+    color: #00ff00; /* Green */
+}
+
+.status-400 {
+    color: #ffcc00; /* Yellow */
+}
+
+.status-500 {
+    color: #ff4444; /* Red */
+}
+
+
+.bottom-container{
+    display: flex;
+    gap: 20px;
+    padding: 30px;
+}
+
+
+.recent-ips {
+    background: #fefefe;
+    padding: 20px;
+    border-radius: 24px;
+    width: 25%;
+}
+
+.recent-ips .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.recent-ips .header h4 {
+    font-weight: 600;
+}
+
+.recent-ips .header a {
+    font-size: 12px;
+    color: #007bff;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.recent-ips .ip-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.recent-ips .ip-list .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #eff6ff;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.recent-ips .ip-list .item:hover {
+    background: #dbeafe;
+}
+
+.recent-ips .ip-list .item div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.recent-ips .ip-list .item .flag {
+    width: 20px;
+    height: 15px;
+    border-radius: 3px;
+}
+
+.recent-ips .ip-list .item span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.recent-ips .ip-list .item p {
+    font-size: 13px;
+    color: #9b9b9b;
+}
+
+
+/* API Traffic Trends */
+
+.bottom-container .api-traffic {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 24px;
+    width: 50%;
+}
+
+/* Header */
+.bottom-container .api-traffic .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.bottom-container .api-traffic .header h4 {
+    font-weight: 600;
+}
+
+/* Tabs */
+.bottom-container .api-traffic .header .tabs {
+    background: #f3f3f3;
+    padding: 4px;
+    border-radius: 20px;
+    display: flex;
+    gap: 5px;
+}
+
+.bottom-container .api-traffic .header .tabs a {
+    padding: 4px 20px;
+    font-size: 12px;
+    color: #000;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.bottom-container .api-traffic .header .tabs a.active {
+    background: #ffffff;
+}
+
+/* API Details */
+.bottom-container .api-traffic .details {
+    display: flex;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
+.bottom-container .api-traffic .details .item h2 {
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.bottom-container .api-traffic .details .item p {
+    font-size: 13px;
+    color: #9b9b9b;
+}
+
+.bottom-container .api-traffic .details .separator {
+    width: 2px;
+    height: 70px;
+    background: #f3f3f3;
+}
+
+/* Chart Canvas */
+.bottom-container .api-traffic .api-chart {
+    width: 100%;
+    height: 250px;
+}
+
+
+/* Live API Request Stream */
+.bottom-container .live-api-stream {
+    background: #10151c;
+    padding: 20px;
+    border-radius: 18px;
+    color: #ffffff;
+}
+
+/* Header */
+.bottom-container .live-api-stream .header {
+    margin-bottom: 20px;
+}
+
+.bottom-container .live-api-stream .header h4 {
+    color: #f1f3f2;
+    font-weight: 500;
+}
+
+/* API Feed */
+.bottom-container .live-api-stream .api-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* Individual Requests */
+.bottom-container .live-api-stream .request {
+    display: flex;
+    justify-content: space-between;
+    background: #1a1f27;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* Status Colors */
+.status-200 {
+    color: #00ff00; /* Green */
+}
+
+.status-400 {
+    color: #ffcc00; /* Yellow */
+}
+
+.status-500 {
+    color: #ff4444; /* Red */
+}
+
+/* Scrollbar Customization */
+.bottom-container .live-api-stream .api-feed::-webkit-scrollbar {
+    width: 6px;
+}
+
+.bottom-container .live-api-stream .api-feed::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 3px;
+}
+
+
+
+
+
+@media screen and (max-width: 1080px) {
+    
+    .top-container .nav .right-section .profile{
+        padding: 5px;
+    }
+
+    .top-container .nav .right-section .profile .info p,
+    .top-container .status .header h4#small{
+        display: none;
+    }
+
+    .top-container .status .items-list{
+        flex-wrap: wrap;
+    }
+
+    .top-container .status .items-list .item{
+        width: 48%;
+    }
+
+    .bottom-container{
+        flex-wrap: wrap;
+    }
+
+   
+
+    
+
+    
+
+}
+
+@media screen and (max-width: 768px) {
+    
+    .top-container .nav{
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .top-container .status .items-list .item .info h5{
+        font-size: 15px;
+    }
+
+   
+    .bottom-container .upcoming{
+        width: 100%;
+    }
+
+}

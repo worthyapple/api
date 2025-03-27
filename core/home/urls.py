@@ -5,6 +5,7 @@ from . import views
 from .views import proxy_view
 
 
+
 urlpatterns = [
     path('', views.home),
     path('student',views.post_student),
@@ -12,7 +13,8 @@ urlpatterns = [
     path('register',views.registeruser.as_view()),
     path('proxy/', proxy_view, name='proxy'),
     path('dashboard/', views.dashboard, name='dashboard'),
-    
+    path('logs/', views.logs, name='logs'),
+
     
 
 ]

@@ -10,9 +10,18 @@ class Student(models.Model):
 class RequestLog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     endpoint = models.CharField(max_length=255)
-    timestamp = models.DateTimeField(auto_now_add=True)
     status_code = models.IntegerField()
-    response_time = models.FloatField(null=True, blank=True)  # Optional, to track speed
+    response_time = models.FloatField(null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)  # Optional, to track speed
+
+    def __str__(self):
+        return f"{self.user.username} -> {self.endpoint} [{self.status_code}]"
+    
+class APILog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    endpoint = models.CharField(max_length=255)
+    status_code = models.IntegerField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user.username} -> {self.endpoint} [{self.status_code}]"

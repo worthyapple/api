@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home/logs.css' %}" />
+    <title>Logs & Moniorting</title>
+</head>
+
+<body>
+
+    <div class="top-container">
+
+        <div class="nav">
+            <div class="logo">
+                <i class='bx bxl-codepen'></i>
+                <a href="#">API Gateways</a>
+            </div>
+
+            <div class="nav-links">
+                <a href="#">Logs </a>
+                <a href="#">Monitoring</a>
+                <a href="#">Settings</a>
+            </div>
+
+            <div class="right-section">
+                <i class='bx bx-bell'></i>
+                <i class='bx bx-search'></i>
+
+                <div class="profile">
+                    <div class="info">
+                        <img src="assets/profile">
+                        <div>
+                            <a href="#">Delhi-Zamato</a>
+                            <p>India</p>
+                        </div>
+                    </div>
+                    <i class='bx bx-chevron-down'></i>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="status">
+            <div class="header">
+                <h4 id="big">Logs & Monitoring</h4>
+                <h4 id="small">Weekly Activity</h4>
+            </div>
+        
+            <!-- Filters -->
+            <div class="filters">
+                <label for="date-filter">Date Range:</label>
+                <input type="date" id="date-filter">
+        
+                <label for="status-filter">Status Code:</label>
+                <select id="status-filter">
+                    <option value="all">All</option>
+                    <option value="200">200</option>
+                    <option value="400">400</option>
+                    <option value="500">500</option>
+                </select>
+        
+                <label for="method-filter">Request Method:</label>
+                <select id="method-filter">
+                    <option value="all">All</option>
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="DELETE">DELETE</option>
+                </select>
+            </div>
+        
+<!-- Logs Table -->
+<!-- <div class="logs-container">
+    <h2>Most Used Endpoints</h2>
+    <br>
+    <ul>
+        {% for endpoint in most_used_endpoints %}
+            <li>{{ endpoint.endpoint }} ({{ endpoint.count }} requests)</li>
+        {% empty %}
+            <li>No data available</li>
+        {% endfor %}
+    </ul>
+    <br>
+    <h2>Recent API Logs</h2>
+    <table class="logs-table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Endpoint</th>
+                <th>Status Code</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in recent_logs %}
+            <tr>
+                <td>{{ log.user__username }}</td>
+                <td>{{ log.endpoint }}</td>
+                <td>{{ log.status_code }}</td>
+                <td>{{ log.timestamp }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align:center;">No recent logs available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div> -->
+
+<div class="logs-container">
+    <h3>Recent API Logs</h3>
+    <table class="logs-table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Endpoint</th>
+                <th>Status Code</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in recent_logs %}
+            <tr>
+                <td>{{ log.user__username|default:"Anonymous" }}</td>
+                <td>{{ log.endpoint }}</td>
+                <td>{{ log.status_code }}</td>
+                <td>{{ log.timestamp }}</td>
+                <td></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align:center; padding: 10px;">No recent logs available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+        </div>
+        
+
+    <div class="bottom-container">
+
+
+
+
+        <div class="api-traffic">
+            <div class="header">
+                <h4>API Traffic Trends</h4>
+                <div class="tabs">
+                    <a href="#" class="active" data-period="hourly">Hourly</a>
+                    <a href="#" data-period="daily">Daily</a>
+                    <a href="#" data-period="weekly">Weekly</a>
+                </div>
+            </div>
+        
+            <div class="details">
+                <div class="item">
+                    <h2 id="total-requests">{{ total_requests }}</h2>
+                    <p>Total Requests</p>
+                </div>
+                <div class="separator"></div>
+                <div class="item">
+                    <h2 id="success-rate">{{ rate_limit }}</h2>
+                    <p>Success Rate</p>
+                </div>
+            </div>
+           
+            <canvas id="apiChart"></canvas>
+        </div>
+        
+        
+        <div class="live-api-stream">
+            <div class="header">
+                <h4>Live API Request Stream</h4>
+            </div>
+        
+            <div class="api-feed">
+                <div class="request">
+                    <span class="ip">192.168.1.1</span>
+                    <span class="endpoint">/api/login</span>
+                    <span class="status status-200">200 OK</span>
+                </div>
+                <div class="request">
+                    <span class="ip">203.45.67.89</span>
+                    <span class="endpoint">/api/user</span>
+                    <span class="status status-400">400 Bad Request</span>
+                </div>
+                <div class="request">
+                    <span class="ip">178.32.56.12</span>
+                    <span class="endpoint">/api/data</span>
+                    <span class="status status-500">500 Server Error</span>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="recent-ips">
+            <div class="header">
+                <h4>Recent IP Requests</h4>
+                <a href="#">View All <i class='bx bx-chevron-right'></i></a>
+            </div>
+        
+            <div class="ip-list">
+                <div class="item" data-ip="192.168.1.45">
+                    <div>
+                        <img src="https://flagcdn.com/w40/us.png" alt="USA Flag" class="flag">
+                        <span>192.168.1.45</span>
+                    </div>
+                    <p>43 requests</p>
+                </div>
+        
+                <div class="item" data-ip="203.0.113.25">
+                    <div>
+                        <img src="https://flagcdn.com/w40/gb.png" alt="UK Flag" class="flag">
+                        <span>203.0.113.25</span>
+                    </div>
+                    <p>27 requests</p>
+                </div>
+        
+                <div class="item" data-ip="172.16.254.1">
+                    <div>
+                        <img src="https://flagcdn.com/w40/in.png" alt="India Flag" class="flag">
+                        <span>172.16.254.1</span>
+                    </div>
+                    <p>36 requests</p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'home/logs.js' %}"></script>
+
+</body>
+
+</html>

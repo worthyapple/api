@@ -15,11 +15,268 @@ from django.core.cache import cache
 import requests
 import time
 from .models import RequestLog 
+from django.shortcuts import render
+from django.utils.timezone import now
+from datetime import timedelta
+from django.db.models import Count
+from .models import APILog
 
-# Create your views here.
+from django.shortcuts import render
+from django.utils.timezone import now
+from datetime import timedelta
+from django.db.models import Count
+from .models import APILog  # Ensure this model exists
+from django.http import JsonResponse
+from .models import APILog
+from django.core.serializers import serialize
 
+def api_logs(request):
+    logs = APILog.objects.all().order_by('-timestamp')[:10]
+    data = serialize('json', logs)
+    return JsonResponse(data, safe=False)
+import random
+from django.shortcuts import render
+from django.utils.timezone import now
+from datetime import timedelta
+from django.db.models import Count
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import APILog
+
+rate_limit = 5  # Max requests per user
+time_window = 60  # In seconds (1 min)
+
+import random
+from django.shortcuts import render
+from django.utils.timezone import now
+from datetime import timedelta
+from django.db.models import Count
+from rest_framework.decorators import api_view
+from .models import APILog
+
+rate_limit = 5  # Max requests per user
+time_window = 60  # In seconds (1 min)
+
+@api_view(['GET'])
+def logs(request):
+    total_requests = random.randint(1, 50)
+    active_users = random.randint(1, 50)
+    requests_made = random.randint(1, 50)
+    remaining_requests = max(0, RATE_LIMIT - requests_made)
+    time_until_reset = random.randint(1, 50)
+
+    most_used_endpoints = [
+        {'endpoint': '/api/student', 'count': random.randint(1, 50)},
+        {'endpoint': '/api/login', 'count': random.randint(1, 50)},
+        {'endpoint': '/api/data', 'count': random.randint(1, 50)}
+    ]
+
+    recent_logs = [
+        {'user__username': 'User1', 'endpoint': '/api/student', 'status_code': 200, 'timestamp': '2025-03-26 12:00:00'},
+        {'user__username': 'User2', 'endpoint': '/api/login', 'status_code': 401, 'timestamp': '2025-03-26 12:05:00'},
+        {'user__username': 'User3', 'endpoint': '/api/data', 'status_code': 403, 'timestamp': '2025-03-26 12:10:00'}
+    ]
+
+    params = {
+        'total_requests': total_requests,
+        'rate_limit': RATE_LIMIT,
+        'requests_made': requests_made,
+        'remaining_requests': remaining_requests,
+        'time_until_reset': time_until_reset,
+        'active_users': active_users,
+        'most_used_endpoints': most_used_endpoints,
+        'recent_logs': recent_logs,
+    }
+
+    print("Dashboard Params:", params)  # Debugging print statement
+    return render(request, 'logs.html', params)
+
+
+@api_view(['GET'])
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    """Fetch API dashboard stats with randomized values for frontend visualization."""
+    total_requests = random.randint(1, 10)  # Randomized
+
+    # Count requests made in the last hour
+    recent_time = now() - timedelta(hours=1)
+    requests_made = random.randint(1, 10)  # Randomized
+    remaining_requests = max(rate_limit - requests_made, 0)
+
+    # Calculate correct countdown for rate limit reset
+    current_time = now()
+    next_reset = current_time.replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
+    if next_reset < current_time:
+        next_reset += timedelta(hours=1)
+
+    time_until_reset = (next_reset - current_time).total_seconds()
+
+    # Fetch active users
+    active_users = random.randint(1, 5)  # Randomized
+
+    # Most used endpoints (Randomized counts)
+    most_used_endpoints = [
+        {"endpoint": "/api/data1/", "count": random.randint(1, 10)},
+        {"endpoint": "/api/data2/", "count": random.randint(1, 10)},
+        {"endpoint": "/api/data3/", "count": random.randint(1, 10)},
+    ]
+
+    # Recent API logs (Randomized)
+    recent_logs = [
+        {"user": f"user{random.randint(1, 10)}", "endpoint": "/api/random/", "status": 200}
+        for _ in range(10)
+    ]
+
+    context = {
+        "total_requests": total_requests,
+        "rate_limit": rate_limit,
+        "time_window": time_window,
+        "requests_made": requests_made,
+        "remaining_requests": remaining_requests,
+        "time_until_reset": int(time_until_reset),
+        "active_users": active_users,
+        "most_used_endpoints": most_used_endpoints,
+        "recent_logs": recent_logs,
+    }
+
+    return render(request, "dashboard.html", context)
+
+# rate_limit = 5  # Example limit
+# time_window = 60  # Example window
+
+
+# @api_view(['GET'])
+# def logs(request):
+#     # Fetch total API requests
+#     total_requests = APILog.objects.count()
+    
+   
+    
+#     # Count requests made in the last hour
+#     recent_time = now() - timedelta(hours=1)
+#     requests_made = APILog.objects.filter(timestamp__gte=recent_time).count()
+#     remaining_requests = max(rate_limit - requests_made, 0)
+    
+#     # Calculate time until reset (assuming reset happens every hour)
+#     current_time = now()
+#     next_reset = (current_time + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
+#     time_until_reset = (next_reset - current_time).seconds  # Time in seconds until next reset
+
+#     # Fetch active users (distinct users making API calls)
+#     active_users = APILog.objects.values("user").distinct().count()
+    
+#     # Most used endpoints
+#     most_used_endpoints = APILog.objects.values("endpoint").annotate(count=Count("endpoint")).order_by("-count")[:5]
+
+#     # Recent API logs
+#     recent_logs = APILog.objects.all().order_by("-timestamp")[:10]
+
+#     context = {
+#         "total_requests": total_requests,
+#         "rate_limit": rate_limit,
+#         "TIME_WINDOW": time_window,
+#         "requests_made": requests_made,
+#         "remaining_requests": remaining_requests,
+#         "time_until_reset": time_until_reset,  # Reintroduced
+#         "active_users": active_users,
+#         "most_used_endpoints": most_used_endpoints,
+#         "recent_logs": recent_logs,
+#     }
+    
+#     return render(request, "logs.html", context)
+
+# from django.shortcuts import render
+# from django.utils.timezone import now
+# from datetime import timedelta
+# from django.db.models import Count
+# from .models import APILog
+
+# rate_limit = 5  # Max requests
+# time_window = 60  # In seconds (1 min)
+
+# @api_view(['GET'])
+# def dashboard(request):
+#     # Fetch total API requests
+#     total_requests = APILog.objects.count()
+
+#     # Count requests made in the last hour
+#     recent_time = now() - timedelta(hours=1)
+#     requests_made = APILog.objects.filter(timestamp__gte=recent_time).count()
+#     remaining_requests = max(rate_limit - requests_made, 0)
+
+#     # Calculate correct countdown for rate limit reset
+#     current_time = now()
+#     next_reset = current_time.replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
+#     if next_reset < current_time:
+#         next_reset += timedelta(hours=1)
+
+#     time_until_reset = (next_reset - current_time).total_seconds()
+
+#     # Fetch active users (distinct users making API calls)
+#     active_users = APILog.objects.values("user").distinct().count()
+
+#     # Most used endpoints
+#     most_used_endpoints = (
+#         APILog.objects.values("endpoint")
+#         .annotate(count=Count("endpoint"))
+#         .order_by("-count")[:5]
+#     )
+
+#     # Recent API logs
+#     recent_logs = APILog.objects.all().order_by("-timestamp")[:10]
+
+#     context = {
+#         "total_requests": total_requests,
+#         "rate_limit": rate_limit,
+#         "time_window": time_window,
+#         "requests_made": requests_made,
+#         "remaining_requests": remaining_requests,
+#         "time_until_reset": int(time_until_reset),  # Convert to integer for frontend display
+#         "active_users": active_users,
+#         "most_used_endpoints": most_used_endpoints,
+#         "recent_logs": recent_logs,
+#     }
+
+#     return render(request, "dashboard.html", context)
+# @api_view(['GET'])
+# def dashboard(request):
+#     # Fetch total API requests
+#     total_requests = APILog.objects.count()
+    
+   
+    
+#     # Count requests made in the last hour
+#     recent_time = now() - timedelta(hours=1)
+#     requests_made = APILog.objects.filter(timestamp__gte=recent_time).count()
+#     remaining_requests = max(rate_limit - requests_made, 0)
+    
+#     # Calculate time until reset (assuming reset happens every hour)
+#     current_time = now()
+#     next_reset = (current_time + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
+#     time_until_reset = (next_reset - current_time).seconds  # Time in seconds until next reset
+
+#     # Fetch active users (distinct users making API calls)
+#     active_users = APILog.objects.values("user").distinct().count()
+    
+#     # Most used endpoints
+#     most_used_endpoints = APILog.objects.values("endpoint").annotate(count=Count("endpoint")).order_by("-count")[:5]
+
+#     # Recent API logs
+#     recent_logs = APILog.objects.all().order_by("-timestamp")[:10]
+
+#     context = {
+#         "total_requests": total_requests,
+#         "rate_limit": rate_limit,
+#         "TIME_WINDOW": time_window,
+#         "requests_made": requests_made,
+#         "remaining_requests": remaining_requests,
+#         "time_until_reset": time_until_reset,  # Reintroduced
+#         "active_users": active_users,
+#         "most_used_endpoints": most_used_endpoints,
+#         "recent_logs": recent_logs,
+#     }
+    
+#     return render(request, "dashboard.html", context)
+
 
 def home(request):
     return render(request, 'login.html')
